@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Foundational Language Skills Screener</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Baloo+2:wght@500;700;800&display=swap">
+<style>
+/* Layout: one centered "card" stage per screen; child screens are big and touch-first, examiner screens are compact and tabular. */
+:root{
+  --bg:#eef3ea;          /* pale leaf */
+  --paper:#ffffff;
+  --ink:#1f3324;         /* deep stem green */
+  --muted:#5b6d5e;
+  --line:#d3dccd;
+  --leaf:#2f7d4a;        /* primary */
+  --leaf-ink:#ffffff;
+  --sun:#f2b632;         /* selection highlight */
+  --sun-soft:#fff3cf;
+  --soil:#7a5638;
+  --good:#2f7d4a; --good-soft:#e1f1e5;
+  --bad:#b4483a;  --bad-soft:#f8e3df;
+  --flag:#9a6a00; --flag-soft:#fff1cc;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Andika","Segoe UI",system-ui,sans-serif;
+  --shadow:0 1px 2px rgba(31,51,36,.08),0 6px 20px rgba(31,51,36,.07);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141c16;--paper:#1d2820;--ink:#e6efe4;--muted:#a3b3a5;--line:#33433a;
+  --leaf:#5cb97a;--leaf-ink:#0f1a12;--sun:#f5c454;--sun-soft:#3a3218;--soil:#c79a72;
+  --good:#6fcb8c;--good-soft:#1e3626;--bad:#ef8a7b;--bad-soft:#3d2320;--flag:#f0c45a;--flag-soft:#3a3016;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141c16;--paper:#1d2820;--ink:#e6efe4;--muted:#a3b3a5;--line:#33433a;
+  --leaf:#5cb97a;--leaf-ink:#0f1a12;--sun:#f5c454;--sun-soft:#3a3218;--soil:#c79a72;
+  --good:#6fcb8c;--good-soft:#1e3626;--bad:#ef8a7b;--bad-soft:#3d2320;--flag:#f0c45a;--flag-soft:#3a3016;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800}
+h2{font-size:clamp(22px,3.6vw,30px);font-weight:700}
+h3{font-size:18px;font-weight:700}
+p{margin:0}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:clamp(18px,4vw,32px);display:flex;flex-direction:column;gap:18px;min-width:0}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.muted{color:var(--muted)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+button{font:inherit;cursor:pointer}
+.btn{border:0;border-radius:999px;padding:12px 22px;font-family:var(--display);font-weight:700;font-size:18px;background:var(--leaf);color:var(--leaf-ink);display:inline-flex;align-items:center;gap:10px;min-height:48px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.small{font-size:15px;padding:8px 16px;min-height:38px}
+.btn:focus-visible,.choice:focus-visible,.linkbtn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.linkbtn{background:none;border:0;color:var(--muted);text-decoration:underline;padding:4px;font-size:14px}
+label.field{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700;color:var(--muted);min-width:0}
+input[type=text],input[type=date],select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+textarea{min-height:80px;resize:vertical}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--leaf)}
+
+/* Header strip */
+.top{display:flex;align-items:center;gap:12px;max-width:860px;margin:0 auto 4px;width:100%}
+.sprout{width:34px;height:34px;flex:none}
+.top .name{font-family:var(--display);font-weight:700;font-size:16px}
+
+/* Test item */
+.itemhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.counter{font-family:var(--display);font-weight:700;font-size:15px;color:var(--muted)}
+.progress{display:flex;gap:4px;flex:1;min-width:160px}
+.progress i{flex:1;height:8px;border-radius:4px;background:var(--line)}
+.progress i.done{background:var(--leaf)}
+.progress i.now{background:var(--sun)}
+.listen{align-self:center;font-size:22px;padding:16px 30px;min-height:64px}
+.listen svg{width:30px;height:30px}
+.listen.playing{background:var(--sun);color:#1f3324}
+.sentence{font-family:var(--display);font-size:clamp(20px,3.4vw,26px);text-align:center;font-weight:600}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,2.4vw,20px);max-width:600px;width:100%;margin:0 auto}
+.choice{position:relative;border:4px solid transparent;border-radius:18px;padding:0;background:var(--bg);overflow:hidden;aspect-ratio:1;max-width:100%;transition:transform .12s ease,border-color .12s ease}
+.choice img{display:block;width:100%;height:100%;object-fit:cover}
+.choice:hover{transform:translateY(-2px)}
+.choice[aria-pressed="true"]{border-color:var(--sun);box-shadow:0 0 0 4px var(--sun-soft)}
+.choice .tag{position:absolute;left:8px;top:8px;background:var(--paper);color:var(--ink);font-family:var(--display);font-weight:700;border-radius:999px;width:30px;height:30px;display:grid;place-items:center;font-size:15px;opacity:.9}
+.choice[aria-pressed="true"] .tag{background:var(--sun);color:#1f3324}
+.choices.locked .choice{pointer-events:none}
+.hint{text-align:center;font-size:15px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.choice{transition:none}.choice:hover{transform:none}}
+
+/* Report */
+.score{display:flex;gap:24px;flex-wrap:wrap;align-items:baseline}
+.big{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;font-variant-numeric:tabular-nums}
+.big small{font-size:26px;color:var(--muted)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px 20px;font-size:15px}
+.meta b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;display:block}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700}
+.pill.ok{background:var(--good-soft);color:var(--good)}
+.pill.no{background:var(--bad-soft);color:var(--bad)}
+.pill.flag{background:var(--flag-soft);color:var(--flag)}
+.toggle{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:4px 10px;font-size:14px}
+.note{background:var(--flag-soft);color:var(--ink);border-radius:12px;padding:12px 14px;font-size:15px}
+.note b{color:var(--flag)}
+
+/* Key review */
+.keyitem{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.keyrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.keyrow button{position:relative;padding:0;border:3px solid transparent;border-radius:10px;overflow:hidden;background:none;aspect-ratio:1}
+.keyrow button img{width:100%;height:100%;object-fit:cover;display:block}
+.keyrow button.key{border-color:var(--leaf)}
+.keyrow button .tag{position:absolute;left:4px;top:4px;background:var(--paper);color:var(--ink);font-weight:700;border-radius:999px;width:22px;height:22px;display:grid;place-items:center;font-size:12px}
+.keyrow button.key .tag{background:var(--leaf);color:var(--leaf-ink)}
+.done-art{width:120px;height:120px;align-self:center}
+.center{text-align:center;align-items:center}
+.videobox{border:2px dashed var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center;background:var(--bg)}
+.videobox a.btn{text-decoration:none}
+.embed{position:relative;width:100%;max-width:720px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
+.embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:15px}
+.copyfallback{width:100%;min-height:140px;font-family:ui-monospace,monospace;font-size:13px}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <svg class="sprout" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 36V18" stroke="var(--leaf)" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M20 22c-9 0-13-6-13-12 7 0 13 4 13 12z" fill="var(--leaf)"/><path d="M20 18c0-7 5-11 13-11 0 7-5 11-13 11z" fill="var(--leaf)" opacity=".75"/><path d="M8 36h24" stroke="var(--soil)" stroke-width="3" stroke-linecap="round"/></svg>
+  <span class="name">Foundational Language Skills Screener</span>
+  <span class="spacer"></span>
+  <button class="linkbtn" id="endEarly" hidden>End &amp; score</button>
+</header>
+<main class="wrap" id="app" aria-live="polite"></main>
+
+<script>
+const IMGS={"item01_A": "images/item01_A.jpg", "item01_B": "images/item01_B.jpg", "item01_C": "images/item01_C.jpg", "item01_D": "images/item01_D.jpg", "item02_A": "images/item02_A.jpg", "item02_B": "images/item02_B.jpg", "item02_C": "images/item02_C.jpg", "item02_D": "images/item02_D.jpg", "item03_A": "images/item03_A.jpg", "item03_B": "images/item03_B.jpg", "item03_C": "images/item03_C.jpg", "item03_D": "images/item03_D.jpg", "item04_A": "images/item04_A.jpg", "item04_B": "images/item04_B.jpg", "item04_C": "images/item04_C.jpg", "item04_D": "images/item04_D.jpg", "item05_A": "images/item05_A.jpg", "item05_B": "images/item05_B.jpg", "item05_C": "images/item05_C.jpg", "item05_D": "images/item05_D.jpg", "item06_A": "images/item06_A.jpg", "item06_B": "images/item06_B.jpg", "item06_C": "images/item06_C.jpg", "item06_D": "images/item06_D.jpg", "item07_A": "images/item07_A.jpg", "item07_B": "images/item07_B.jpg", "item07_C": "images/item07_C.jpg", "item07_D": "images/item07_D.jpg", "item08_A": "images/item08_A.jpg", "item08_B": "images/item08_B.jpg", "item08_C": "images/item08_C.jpg", "item08_D": "images/item08_D.jpg", "item09_A": "images/item09_A.jpg", "item09_B": "images/item09_B.jpg", "item09_C": "images/item09_C.jpg", "item09_D": "images/item09_D.jpg", "item10_A": "images/item10_A.jpg", "item10_B": "images/item10_B.jpg", "item10_C": "images/item10_C.jpg", "item10_D": "images/item10_D.jpg", "item11_A": "images/item11_A.jpg", "item11_B": "images/item11_B.jpg", "item11_C": "images/item11_C.jpg", "item11_D": "images/item11_D.jpg", "item12_A": "images/item12_A.jpg", "item12_B": "images/item12_B.jpg", "item12_C": "images/item12_C.jpg", "item12_D": "images/item12_D.jpg", "item13_A": "images/item13_A.jpg", "item13_B": "images/item13_B.jpg", "item13_C": "images/item13_C.jpg", "item13_D": "images/item13_D.jpg", "item14_A": "images/item14_A.jpg", "item14_B": "images/item14_B.jpg", "item14_C": "images/item14_C.jpg", "item14_D": "images/item14_D.jpg", "item15_A": "images/item15_A.jpg", "item15_B": "images/item15_B.jpg", "item15_C": "images/item15_C.jpg", "item15_D": "images/item15_D.jpg", "item16_A": "images/item16_A.jpg", "item16_B": "images/item16_B.jpg", "item16_C": "images/item16_C.jpg", "item16_D": "images/item16_D.jpg", "item17_A": "images/item17_A.jpg", "item17_B": "images/item17_B.jpg", "item17_C": "images/item17_C.jpg", "item17_D": "images/item17_D.jpg", "item18_A": "images/item18_A.jpg", "item18_B": "images/item18_B.jpg", "item18_C": "images/item18_C.jpg", "item18_D": "images/item18_D.jpg", "item19_A": "images/item19_A.jpg", "item19_B": "images/item19_B.jpg", "item19_C": "images/item19_C.jpg", "item19_D": "images/item19_D.jpg", "item20_A": "images/item20_A.jpg", "item20_B": "images/item20_B.jpg", "item20_C": "images/item20_C.jpg", "item20_D": "images/item20_D.jpg"};
+/* ---------------------------------------------------------------
+   ITEMS: edit sentences, answer key, or add audio here.
+   key = correct picture: A (top-left), B (top-right),
+         C (bottom-left), D (bottom-right)
+   check = true means the key is a proposed answer to confirm.
+   audio = optional URL to a recorded clip; if null, the browser's
+           text-to-speech voice reads the sentence.
+---------------------------------------------------------------- */
+const ITEMS = [
+  {s:"The plant is not healthy.", key:"B"},
+  {s:"The long, thin roots soak up the water.", key:"D"},
+  {s:"Her flower smells sweet.", key:"A"},
+  {s:"The boy is reading under the shady tree by himself.", key:"A"},
+  {s:"Do you feel the breeze blowing gently?", key:"B", check:"B and D both show a gentle breeze (one child vs. two)."},
+  {s:"The leafy, spiky plant grew between the trees.", key:"C"},
+  {s:"The butterfly is flying toward the closest flower.", key:"A"},
+  {s:"The teacher asked, “How do plants make their own food?”", key:"D", check:"C (teacher pointing at roots) and D (pointing at leaves) are both plant lessons."},
+  {s:"The yard has the most bushes, but it has the fewest flowers.", key:"A"},
+  {s:"The boy and the girl picked the tomatoes after they had grown.", key:"C", check:"A also shows the boy and girl picking ripe tomatoes."},
+  {s:"Mom says, “If you don’t water those flowers, they will not survive.”", key:"D"},
+  {s:"The deer is eating the leaves not the stem because the thorns are protecting it.", key:"C"},
+  {s:"Dad said, “I don’t need to water the garden today since it rained last night.”", key:"A", check:"Chose the sunny morning (rain was last night). D shows rain right now."},
+  {s:"A bee landed on the red flower after it developed.", key:"B"},
+  {s:"The gardener who planted the seed was kneeling by her dog.", key:"C", check:"A also shows her kneeling by the dog, next to sprouts."},
+  {s:"He grew like a tall tree.", key:"B"},
+  {s:"We moved to a new house because dad said it was time to put down our roots.", key:"C", check:"C shows moving in; D shows the family planting at the new house."},
+  {s:"The water was provided to the girl by her mom.", key:"A", check:"A: mom hands the can to the girl. D appears to be the reverse."},
+  {s:"We were upset when our vegetables didn’t grow.", key:"C"},
+  {s:"The leaves that had fallen to the ground were golden and crunchy.", key:"C"},
+].map((it,i)=>({...it,n:i+1,audio:it.audio||null}));
+
+const BG_VIDEO = "https://www.youtube.com/watch?v=yTzSIXUU_ds";
+const DIRECTIONS_VIDEO = null; // add a link here when the directions video is ready
+const INTRO_VIDEO = null;      // add a link here when Claire and Holden's overview video is ready
+const BUILD = {embed:true,audioDir:"audio/"}; // embed: play YouTube videos on the page; audioDir: folder of recorded clips (item01.mp3 ... item20.mp3)
+const LETTERS = ["A","B","C","D"];
+function ytId(u){ const m=String(u).match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/); return m?m[1]:null; }
+function videoHTML(url,label,intro){
+  const id=ytId(url);
+  if(BUILD.embed && id) return `<div class="videobox"><p>${esc(intro)}</p>
+    <div class="embed"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${esc(label)}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+    <a class="linkbtn" href="${url}" target="_blank" rel="noopener">Video not playing? Open it on YouTube</a></div>`;
+  return `<div class="videobox"><p>${esc(intro)} It opens in a new tab. Come back here when it ends.</p><a class="btn" href="${url}" target="_blank" rel="noopener">${PLAY} ${esc(label)}</a></div>`;
+}
+const img = (n,l)=>IMGS["item"+String(n).padStart(2,"0")+"_"+l];
+
+/* ---------------- state ---------------- */
+let S = freshState();
+function freshState(){
+  return {screen:"setup", info:{student:"",grade:"",examiner:"",date:new Date().toISOString().slice(0,10)},
+    opts:{showText:false,autoplay:true,voice:"",rate:0.9},
+    i:0, resp:ITEMS.map(()=>({choice:null,plays:0,ms:null})), override:{}, notes:"", shownAt:0};
+}
+try{const o=JSON.parse(localStorage.getItem("flss-opts")||"null"); if(o) Object.assign(S.opts,o);}catch(e){}
+function saveOpts(){try{localStorage.setItem("flss-opts",JSON.stringify(S.opts))}catch(e){}}
+
+/* ---------------- speech ---------------- */
+let voices=[];
+function loadVoices(){ try{voices=(speechSynthesis.getVoices()||[]).filter(v=>/^en/i.test(v.lang));}catch(e){voices=[]} }
+if("speechSynthesis" in window){ loadVoices(); speechSynthesis.onvoiceschanged=()=>{loadVoices(); if(S.screen==="setup") render();}; }
+let currentAudio=null;
+function speak(text, audioUrl, onend){
+  stopSpeech();
+  if(audioUrl){
+    const a=new Audio(audioUrl); currentAudio=a; let fell=false;
+    const fallback=()=>{ if(fell||currentAudio!==a) return; fell=true; currentAudio=null; speak(text,null,onend); };
+    a.onended=onend; a.onerror=fallback; a.play().catch(fallback); return; }
+  if(!("speechSynthesis" in window)){ onend&&onend(); return; }
+  const u=new SpeechSynthesisUtterance(text.replace(/[“”]/g,'"').replace(/’/g,"'"));
+  u.rate=S.opts.rate; u.lang="en-US";
+  const v=voices.find(v=>v.name===S.opts.voice); if(v) u.voice=v;
+  u.onend=onend; u.onerror=onend;
+  speechSynthesis.speak(u);
+}
+function stopSpeech(){ try{speechSynthesis.cancel()}catch(e){} if(currentAudio){currentAudio.pause();currentAudio=null;} }
+
+/* ---------------- render ---------------- */
+const app=document.getElementById("app");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function go(screen){ stopSpeech(); S.screen=screen; render(); window.scrollTo({top:0}); }
+function render(){
+  document.getElementById("endEarly").hidden = S.screen!=="item";
+  ({setup:rSetup,key:rKey,directions:rDirections,background:rBackground,item:rItem,done:rDone,report:rReport})[S.screen]();
+}
+
+function rSetup(){
+  const vopts = voices.length ? `<label class="field">Reading voice
+      <select id="voice"><option value="">Device default</option>${voices.map(v=>`<option ${v.name===S.opts.voice?"selected":""}>${esc(v.name)}</option>`).join("")}</select></label>`
+    : `<p class="muted" style="font-size:14px">This browser's voice list hasn't loaded. The default voice will be used.</p>`;
+  app.innerHTML=`
+  <section class="card">
+    <div><p class="eyebrow">Examiner setup</p><h1>Sentence Comprehension</h1></div>
+    <p class="muted">The student hears 20 sentences about plants. After each one, they tap the picture that matches. Scores appear at the end for the examiner.</p>
+    ${INTRO_VIDEO ? videoHTML(INTRO_VIDEO,"Watch the overview","Screener overview: how to give this screener.") : `<div class="videobox"><svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="15" height="14" rx="3" fill="none" stroke="var(--muted)" stroke-width="1.8"/><path d="M17 10l5-3v10l-5-3z" fill="var(--muted)"/></svg><p class="eyebrow">Screener overview video</p><p class="muted">A walkthrough video from Claire Dolly and Holden is coming soon.</p></div>`}
+    <div class="grid2">
+      <label class="field">Student name or ID<input type="text" id="student" value="${esc(S.info.student)}" autocomplete="off"></label>
+      <label class="field">Grade<input type="text" id="grade" value="${esc(S.info.grade)}" autocomplete="off"></label>
+      <label class="field">Examiner<input type="text" id="examiner" value="${esc(S.info.examiner)}" autocomplete="off"></label>
+      <label class="field">Date<input type="date" id="date" value="${esc(S.info.date)}"></label>
+    </div>
+    <div class="grid2">
+      ${vopts}
+      <label class="field">Reading speed
+        <select id="rate">${[[0.75,"Slower"],[0.9,"Slightly slow"],[1,"Normal"]].map(([v,l])=>`<option value="${v}" ${S.opts.rate==v?"selected":""}>${l}</option>`).join("")}</select></label>
+    </div>
+    <label class="check"><input type="checkbox" id="autoplay" ${S.opts.autoplay?"checked":""}> Read each sentence aloud automatically when the item appears</label>
+    <label class="check"><input type="checkbox" id="showText" ${S.opts.showText?"checked":""}> Show the sentence in writing (leave off for a listening-only task)</label>
+    <div class="row">
+      <button class="btn ghost small" id="testVoice">Test the voice</button>
+      <button class="btn ghost small" id="viewKey">Review answer key</button>
+      <span class="spacer"></span>
+      <button class="btn" id="start">Begin with student</button>
+    </div>
+  </section>`;
+  const bind=(id,fn)=>document.getElementById(id).addEventListener("input",fn);
+  ["student","grade","examiner","date"].forEach(k=>bind(k,e=>S.info[k]=e.target.value));
+  if(voices.length) bind("voice",e=>{S.opts.voice=e.target.value;saveOpts()});
+  bind("rate",e=>{S.opts.rate=parseFloat(e.target.value);saveOpts()});
+  document.getElementById("autoplay").onchange=e=>{S.opts.autoplay=e.target.checked;saveOpts()};
+  document.getElementById("showText").onchange=e=>{S.opts.showText=e.target.checked;saveOpts()};
+  document.getElementById("testVoice").onclick=()=>speak("The plant is not healthy.");
+  document.getElementById("viewKey").onclick=()=>go("key");
+  document.getElementById("start").onclick=()=>go("directions");
+}
+
+function rKey(){
+  const flagged=ITEMS.filter(x=>x.check).length;
+  app.innerHTML=`<section class="card">
+    <div class="row"><div><p class="eyebrow">Examiner only</p><h2>Answer key</h2></div><span class="spacer"></span><button class="btn ghost small" id="back">Back to setup</button></div>
+    <div class="note"><b>${flagged} items marked “Confirm”</b> have a second picture that could also fit. Tap any picture to change the key for this session. Permanent changes go in the ITEMS list in the page source.</div>
+    ${ITEMS.map(it=>`<div class="keyitem">
+      <div class="row"><h3>${it.n}. ${esc(it.s)}</h3>${it.check?`<span class="pill flag">Confirm</span>`:""}</div>
+      ${it.check?`<p class="muted" style="font-size:14px">${esc(it.check)}</p>`:""}
+      <div class="keyrow">${LETTERS.map(l=>`<button data-n="${it.n}" data-l="${l}" class="${it.key===l?"key":""}" aria-label="Item ${it.n} picture ${l}${it.key===l?", answer":""}"><img src="${img(it.n,l)}" alt=""><span class="tag">${l}</span></button>`).join("")}</div>
+    </div>`).join("")}
+  </section>`;
+  document.getElementById("back").onclick=()=>go("setup");
+  app.querySelectorAll(".keyrow button").forEach(b=>b.onclick=()=>{ITEMS[b.dataset.n-1].key=b.dataset.l; rKey();});
+}
+
+const DIR_TEXT="You are going to hear some sentences about plants. After each sentence, look at the four pictures. Tap the picture that matches the sentence. You can press the speaker button to hear the sentence again.";
+function rDirections(){
+  app.innerHTML=`<section class="card">
+    <div><p class="eyebrow">Step 1 of 3</p><h2>Directions</h2></div>
+    ${DIRECTIONS_VIDEO ? videoHTML(DIRECTIONS_VIDEO,"Watch directions","Watch the directions video.")
+      : `<div class="videobox"><p class="muted">Directions video coming soon. For now, press the button to hear the directions.</p></div>`}
+    <p style="font-size:20px">${DIR_TEXT}</p>
+    <div class="row"><button class="btn ghost" id="hear">${SPEAKER} Hear directions</button><span class="spacer"></span><button class="btn" id="next">Next</button></div>
+  </section>`;
+  document.getElementById("hear").onclick=()=>speak(DIR_TEXT);
+  document.getElementById("next").onclick=()=>go("background");
+}
+function rBackground(){
+  app.innerHTML=`<section class="card">
+    <div><p class="eyebrow">Step 2 of 3</p><h2>Let’s learn about plants</h2></div>
+    ${videoHTML(BG_VIDEO,"Watch the plant video","Watch this short video about plants.")}
+    <div class="row"><button class="btn ghost" id="back">Back</button><span class="spacer"></span><button class="btn" id="next">I watched it. Start!</button></div>
+  </section>`;
+  document.getElementById("back").onclick=()=>go("directions");
+  document.getElementById("next").onclick=()=>{S.i=0; go("item");};
+}
+
+const SPEAKER=`<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
+const PLAY=`<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M7 5l12 7-12 7z" fill="currentColor"/></svg>`;
+
+function rItem(){
+  const it=ITEMS[S.i], r=S.resp[S.i];
+  app.innerHTML=`<section class="card">
+    <div class="itemhead"><span class="counter">${S.i+1} of ${ITEMS.length}</span>
+      <div class="progress" aria-hidden="true">${ITEMS.map((_,k)=>`<i class="${k<S.i?"done":k===S.i?"now":""}"></i>`).join("")}</div></div>
+    <button class="btn listen" id="listen">${SPEAKER} <span>${r.plays?"Hear it again":"Hear the sentence"}</span></button>
+    ${S.opts.showText?`<p class="sentence">${esc(it.s)}</p>`:""}
+    <div class="choices" id="choices" role="group" aria-label="Pictures">
+      ${LETTERS.map(l=>`<button class="choice" data-l="${l}" aria-pressed="${r.choice===l}" aria-label="Picture ${l}"><img src="${img(it.n,l)}" alt=""><span class="tag">${l}</span></button>`).join("")}
+    </div>
+    <p class="hint" id="hint">${r.choice?"Tap Next when you are ready.":"Tap the picture that matches the sentence."}</p>
+    <div class="row">
+      <button class="btn ghost" id="prev" ${S.i===0?"disabled":""}>Back</button>
+      <span class="spacer"></span>
+      <button class="btn" id="next" ${r.choice?"":"disabled"}>${S.i===ITEMS.length-1?"Finish":"Next"}</button>
+    </div>
+  </section>`;
+  S.shownAt=performance.now();
+  const lb=document.getElementById("listen");
+  const play=()=>{ r.plays++; lb.classList.add("playing"); lb.querySelector("span").textContent="Listening…";
+    const clip = it.audio || (BUILD.audioDir ? BUILD.audioDir+"item"+String(it.n).padStart(2,"0")+".mp3" : null);
+    speak(it.s,clip,()=>{lb.classList.remove("playing"); lb.querySelector("span").textContent="Hear it again"; S.shownAt=performance.now();}); };
+  lb.onclick=play;
+  app.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
+    r.choice=b.dataset.l; r.ms=Math.round(performance.now()-S.shownAt);
+    app.querySelectorAll(".choice").forEach(x=>x.setAttribute("aria-pressed",x===b));
+    document.getElementById("next").disabled=false;
+    document.getElementById("hint").textContent="Tap Next when you are ready.";
+  });
+  document.getElementById("prev").onclick=()=>{S.i--; go("item");};
+  document.getElementById("next").onclick=()=>{ if(S.i<ITEMS.length-1){S.i++; go("item");} else go("done"); };
+  if(S.opts.autoplay && r.plays===0) setTimeout(()=>{ if(S.screen==="item"&&ITEMS[S.i]===it) play(); },350);
+}
+
+function rDone(){
+  app.innerHTML=`<section class="card center">
+    <svg class="done-art" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="40" r="16" fill="var(--sun)"/>
+      ${[...Array(12)].map((_,k)=>{const a=k*Math.PI/6;return `<ellipse cx="${60+Math.cos(a)*26}" cy="${40+Math.sin(a)*26}" rx="11" ry="6" transform="rotate(${k*30} ${60+Math.cos(a)*26} ${40+Math.sin(a)*26})" fill="var(--sun)" opacity=".75"/>`}).join("")}
+      <path d="M60 58v52" stroke="var(--leaf)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M60 88c-14 0-22-8-22-18 12 0 22 6 22 18zM60 80c0-12 9-18 22-18 0 10-8 18-22 18z" fill="var(--leaf)"/>
+    </svg>
+    <h2>You finished. Great job!</h2>
+    <p class="muted">Please let your teacher know you are done.</p>
+    <button class="btn ghost small" id="toReport">Examiner: view scores</button>
+  </section>`;
+  speak("You finished. Great job!");
+  document.getElementById("toReport").onclick=()=>go("report");
+}
+
+function isCorrect(k){ if(k in S.override) return S.override[k]; const r=S.resp[k]; return r.choice!==null && r.choice===ITEMS[k].key; }
+function rReport(){
+  const answered=S.resp.filter(r=>r.choice).length;
+  const correct=ITEMS.reduce((a,_,k)=>a+(isCorrect(k)?1:0),0);
+  const pct=Math.round(correct/ITEMS.length*100);
+  const fmt=ms=>ms==null?"–":(ms/1000).toFixed(1)+" s";
+  app.innerHTML=`<section class="card">
+    <div class="row"><div><p class="eyebrow">Examiner report</p><h2>Sentence comprehension score</h2></div></div>
+    <div class="score"><div class="big">${correct}<small> / ${ITEMS.length}</small></div><div><b style="font-size:22px">${pct}% correct</b><p class="muted">${answered} of ${ITEMS.length} items answered</p></div></div>
+    <div class="meta">
+      <div><b>Student</b>${esc(S.info.student||"–")}</div><div><b>Grade</b>${esc(S.info.grade||"–")}</div>
+      <div><b>Examiner</b>${esc(S.info.examiner||"–")}</div><div><b>Date</b>${esc(S.info.date||"–")}</div>
+    </div>
+    ${ITEMS.some(x=>x.check)?`<div class="note"><b>Proposed answer key.</b> Items marked “Confirm” could have two defensible answers. Use the Score button on any row to override.</div>`:""}
+    <div class="tablewrap"><table>
+      <thead><tr><th>#</th><th>Sentence</th><th>Chose</th><th>Key</th><th>Plays</th><th>Time</th><th>Score</th></tr></thead>
+      <tbody>${ITEMS.map((it,k)=>{const r=S.resp[k],ok=isCorrect(k),ov=k in S.override;return `<tr>
+        <td class="num">${it.n}</td>
+        <td style="min-width:220px">${esc(it.s)} ${it.check?`<span class="pill flag">Confirm</span>`:""}</td>
+        <td><div class="row" style="gap:8px">${r.choice?`<img class="thumb" src="${img(it.n,r.choice)}" alt="">${r.choice}`:"–"}</div></td>
+        <td><div class="row" style="gap:8px"><img class="thumb" src="${img(it.n,it.key)}" alt="">${it.key}</div></td>
+        <td class="num">${r.plays}</td><td class="num">${fmt(r.ms)}</td>
+        <td><button class="toggle" data-k="${k}" title="Tap to override">${ok?`<span class="pill ok">1 Correct</span>`:`<span class="pill no">0 Incorrect</span>`}${ov?" *":""}</button></td>
+      </tr>`}).join("")}</tbody>
+    </table></div>
+    <p class="muted" style="font-size:13px">Plays = times the sentence was heard. Time = seconds from the end of the last play to the tap. * = score changed by examiner.</p>
+    <label class="field">Examiner notes<textarea id="notes" placeholder="Behavior, attention, repeated requests, anything unusual">${esc(S.notes)}</textarea></label>
+    <div class="row">
+      <button class="btn small" id="copy">Copy results for a spreadsheet</button>
+      <span class="spacer"></span>
+      <button class="btn ghost small" id="again">Start a new student</button>
+    </div>
+    <div id="fallback"></div>
+  </section>`;
+  app.querySelectorAll(".toggle").forEach(b=>b.onclick=()=>{const k=+b.dataset.k; const cur=isCorrect(k); const auto=S.resp[k].choice===ITEMS[k].key;
+    if(!cur===auto) delete S.override[k]; else S.override[k]=!cur; rReport();});
+  document.getElementById("notes").addEventListener("input",e=>S.notes=e.target.value);
+  document.getElementById("copy").onclick=()=>{
+    const head=["Student","Grade","Examiner","Date","Item","Sentence","Response","Key","Score","Plays","Seconds"];
+    const rows=ITEMS.map((it,k)=>{const r=S.resp[k];return [S.info.student,S.info.grade,S.info.examiner,S.info.date,it.n,it.s,r.choice||"",it.key,isCorrect(k)?1:0,r.plays,r.ms==null?"":(r.ms/1000).toFixed(1)];});
+    rows.push(["","","","","TOTAL","",""," ",correct,"",""]);
+    if(S.notes) rows.push(["","","","","NOTES",S.notes.replace(/\s+/g," ")]);
+    const tsv=[head,...rows].map(r=>r.join("\t")).join("\n");
+    const fb=()=>{document.getElementById("fallback").innerHTML=`<p class="muted" style="font-size:14px">Copying was blocked. Select the text below and copy it.</p><textarea class="copyfallback" id="tsv" readonly>${esc(tsv)}</textarea>`;const t=document.getElementById("tsv");t.focus();t.select();};
+    try{navigator.clipboard.writeText(tsv).then(()=>toast("Copied. Paste into Excel or Google Sheets."),fb);}catch(e){fb();}
+  };
+  let armed=false; const again=document.getElementById("again");
+  again.onclick=()=>{ if(!armed){armed=true; again.textContent="Tap again to clear these results"; setTimeout(()=>{armed=false; if(again.isConnected) again.textContent="Start a new student";},4000); return;}
+    const keep=S.opts; S=freshState(); S.opts=keep; go("setup"); };
+}
+function toast(msg){const t=document.createElement("div");t.className="toast";t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600);}
+
+let endArmed=false; const endBtn=document.getElementById("endEarly");
+endBtn.onclick=()=>{ if(!endArmed){endArmed=true;endBtn.textContent="Tap again to end";setTimeout(()=>{endArmed=false;endBtn.textContent="End & score";},3000);return;} endArmed=false; endBtn.textContent="End & score"; go("report"); };
+
+render();
+</script>
+
+</body>
+</html>
