@@ -144,7 +144,7 @@ tr:last-child td{border-bottom:0}
 <main class="wrap" id="app" aria-live="polite"></main>
 
 <script>
-const IMGS={"item01_A": "images/item01_A.jpg", "item01_B": "images/item01_B.jpg", "item01_C": "images/item01_C.jpg", "item01_D": "images/item01_D.jpg", "item02_A": "images/item02_A.jpg", "item02_B": "images/item02_B.jpg", "item02_C": "images/item02_C.jpg", "item02_D": "images/item02_D.jpg", "item03_A": "images/item03_A.jpg", "item03_B": "images/item03_B.jpg", "item03_C": "images/item03_C.jpg", "item03_D": "images/item03_D.jpg", "item04_A": "images/item04_A.jpg", "item04_B": "images/item04_B.jpg", "item04_C": "images/item04_C.jpg", "item04_D": "images/item04_D.jpg", "item05_A": "images/item05_A.jpg", "item05_B": "images/item05_B.jpg", "item05_C": "images/item05_C.jpg", "item05_D": "images/item05_D.jpg", "item06_A": "images/item06_A.jpg", "item06_B": "images/item06_B.jpg", "item06_C": "images/item06_C.jpg", "item06_D": "images/item06_D.jpg", "item07_A": "images/item07_A.jpg", "item07_B": "images/item07_B.jpg", "item07_C": "images/item07_C.jpg", "item07_D": "images/item07_D.jpg", "item08_A": "images/item08_A.jpg", "item08_B": "images/item08_B.jpg", "item08_C": "images/item08_C.jpg", "item08_D": "images/item08_D.jpg", "item09_A": "images/item09_A.jpg", "item09_B": "images/item09_B.jpg", "item09_C": "images/item09_C.jpg", "item09_D": "images/item09_D.jpg", "item10_A": "images/item10_A.jpg", "item10_B": "images/item10_B.jpg", "item10_C": "images/item10_C.jpg", "item10_D": "images/item10_D.jpg", "item11_A": "images/item11_A.jpg", "item11_B": "images/item11_B.jpg", "item11_C": "images/item11_C.jpg", "item11_D": "images/item11_D.jpg", "item12_A": "images/item12_A.jpg", "item12_B": "images/item12_B.jpg", "item12_C": "images/item12_C.jpg", "item12_D": "images/item12_D.jpg", "item13_A": "images/item13_A.jpg", "item13_B": "images/item13_B.jpg", "item13_C": "images/item13_C.jpg", "item13_D": "images/item13_D.jpg", "item14_A": "images/item14_A.jpg", "item14_B": "images/item14_B.jpg", "item14_C": "images/item14_C.jpg", "item14_D": "images/item14_D.jpg", "item15_A": "images/item15_A.jpg", "item15_B": "images/item15_B.jpg", "item15_C": "images/item15_C.jpg", "item15_D": "images/item15_D.jpg", "item16_A": "images/item16_A.jpg", "item16_B": "images/item16_B.jpg", "item16_C": "images/item16_C.jpg", "item16_D": "images/item16_D.jpg", "item17_A": "images/item17_A.jpg", "item17_B": "images/item17_B.jpg", "item17_C": "images/item17_C.jpg", "item17_D": "images/item17_D.jpg", "item18_A": "images/item18_A.jpg", "item18_B": "images/item18_B.jpg", "item18_C": "images/item18_C.jpg", "item18_D": "images/item18_D.jpg", "item19_A": "images/item19_A.jpg", "item19_B": "images/item19_B.jpg", "item19_C": "images/item19_C.jpg", "item19_D": "images/item19_D.jpg", "item20_A": "images/item20_A.jpg", "item20_B": "images/item20_B.jpg", "item20_C": "images/item20_C.jpg", "item20_D": "images/item20_D.jpg"};
+const IMGS={"item01_A": "images/item01_A.jpg", "item03_A": "images/item03_A.jpg", "item08_C": "images/item08_C.jpg", "item09_D": "images/item09_D.jpg", "item04_D": "images/item04_D.jpg", "item14_D": "images/item14_D.jpg", "item12_D": "images/item12_D.jpg", "item17_B": "images/item17_B.jpg", "item13_C": "images/item13_C.jpg", "item03_C": "images/item03_C.jpg", "item03_B": "images/item03_B.jpg", "item05_C": "images/item05_C.jpg", "item11_A": "images/item11_A.jpg", "item10_B": "images/item10_B.jpg", "item18_C": "images/item18_C.jpg", "item16_C": "images/item16_C.jpg", "item10_C": "images/item10_C.jpg", "item19_D": "images/item19_D.jpg", "item11_D": "images/item11_D.jpg", "item04_C": "images/item04_C.jpg", "item10_D": "images/item10_D.jpg", "item18_A": "images/item18_A.jpg", "item19_A": "images/item19_A.jpg", "item02_D": "images/item02_D.jpg", "item13_A": "images/item13_A.jpg", "item16_D": "images/item16_D.jpg", "item07_D": "images/item07_D.jpg", "item05_D": "images/item05_D.jpg", "item20_B": "images/item20_B.jpg", "item06_A": "images/item06_A.jpg", "item09_C": "images/item09_C.jpg", "item09_A": "images/item09_A.jpg", "item15_D": "images/item15_D.jpg", "item03_D": "images/item03_D.jpg", "item20_C": "images/item20_C.jpg", "item12_B": "images/item12_B.jpg", "item09_B": "images/item09_B.jpg", "item07_A": "images/item07_A.jpg", "item04_B": "images/item04_B.jpg", "item15_A": "images/item15_A.jpg", "item16_B": "images/item16_B.jpg", "item19_C": "images/item19_C.jpg", "item14_C": "images/item14_C.jpg", "item01_B": "images/item01_B.jpg", "item07_B": "images/item07_B.jpg", "item06_B": "images/item06_B.jpg", "item06_C": "images/item06_C.jpg", "item06_D": "images/item06_D.jpg", "item13_B": "images/item13_B.jpg", "item11_B": "images/item11_B.jpg", "item02_C": "images/item02_C.jpg", "item17_C": "images/item17_C.jpg", "item20_A": "images/item20_A.jpg", "item12_A": "images/item12_A.jpg", "item07_C": "images/item07_C.jpg", "item02_A": "images/item02_A.jpg", "item14_A": "images/item14_A.jpg", "item05_B": "images/item05_B.jpg", "item17_A": "images/item17_A.jpg", "item01_C": "images/item01_C.jpg", "item04_A": "images/item04_A.jpg", "item19_B": "images/item19_B.jpg", "item01_D": "images/item01_D.jpg", "item08_B": "images/item08_B.jpg", "item08_A": "images/item08_A.jpg", "item14_B": "images/item14_B.jpg", "item15_C": "images/item15_C.jpg", "item02_B": "images/item02_B.jpg", "item18_B": "images/item18_B.jpg", "item08_D": "images/item08_D.jpg", "item12_C": "images/item12_C.jpg", "item05_A": "images/item05_A.jpg", "item13_D": "images/item13_D.jpg", "item11_C": "images/item11_C.jpg", "item16_A": "images/item16_A.jpg", "item17_D": "images/item17_D.jpg", "item15_B": "images/item15_B.jpg", "item18_D": "images/item18_D.jpg", "item20_D": "images/item20_D.jpg", "item10_A": "images/item10_A.jpg"};
 /* ---------------------------------------------------------------
    ITEMS: edit sentences, answer key, or add audio here.
    key = correct picture: A (top-left), B (top-right),
@@ -203,23 +203,43 @@ function saveOpts(){try{localStorage.setItem("flss-opts",JSON.stringify(S.opts))
 
 /* ---------------- speech ---------------- */
 let voices=[];
-function loadVoices(){ try{voices=(speechSynthesis.getVoices()||[]).filter(v=>/^en/i.test(v.lang));}catch(e){voices=[]} }
-if("speechSynthesis" in window){ loadVoices(); speechSynthesis.onvoiceschanged=()=>{loadVoices(); if(S.screen==="setup") render();}; }
-let currentAudio=null;
+const synth = ("speechSynthesis" in window) ? window.speechSynthesis : null;
+function loadVoices(){ try{voices=(synth.getVoices()||[]).filter(v=>/^en/i.test(v.lang));}catch(e){voices=[]} }
+if(synth){ loadVoices();
+  const onVoices=()=>{ const before=voices.length; loadVoices(); if(S.screen==="setup" && voices.length!==before) renderVoiceField(); };
+  try{ synth.addEventListener("voiceschanged",onVoices); }catch(e){ synth.onvoiceschanged=onVoices; } }
+let currentAudio=null, currentUtter=null, speakToken=0;
+function voiceProblem(){
+  toast(synth ? "No reading voice played. Check the volume, or try Chrome, Edge, or Safari." : "This browser can't read aloud. Try Chrome, Edge, or Safari.");
+}
 function speak(text, audioUrl, onend){
-  stopSpeech();
+  const token=++speakToken; let finished=false;
+  const done=()=>{ if(finished||token!==speakToken) return; finished=true; onend&&onend(); };
+  const hadSpeech=stopSpeech();
   if(audioUrl){
     const a=new Audio(audioUrl); currentAudio=a; let fell=false;
     const fallback=()=>{ if(fell||currentAudio!==a) return; fell=true; currentAudio=null; speak(text,null,onend); };
-    a.onended=onend; a.onerror=fallback; a.play().catch(fallback); return; }
-  if(!("speechSynthesis" in window)){ onend&&onend(); return; }
+    a.onended=done; a.onerror=fallback; a.play().catch(fallback); return; }
+  if(!synth){ voiceProblem(); done(); return; }
   const u=new SpeechSynthesisUtterance(text.replace(/[“”]/g,'"').replace(/’/g,"'"));
-  u.rate=S.opts.rate; u.lang="en-US";
-  const v=voices.find(v=>v.name===S.opts.voice); if(v) u.voice=v;
-  u.onend=onend; u.onerror=onend;
-  speechSynthesis.speak(u);
+  currentUtter=u; // keep a reference so Chrome doesn't drop it mid-sentence
+  u.rate=S.opts.rate||0.9; u.lang="en-US"; u.volume=1;
+  const v=voices.find(v=>v.name===S.opts.voice); if(v){ u.voice=v; u.lang=v.lang; }
+  let started=false;
+  u.onstart=()=>{ started=true; };
+  u.onend=done;
+  u.onerror=e=>{ if(token===speakToken && e && !/interrupt|cancel/i.test(e.error||"")) voiceProblem(); done(); };
+  const start=()=>{ if(token!==speakToken) return; try{synth.resume()}catch(e){} synth.speak(u);
+    setTimeout(()=>{ if(!started && token===speakToken && !finished){ try{synth.cancel()}catch(e){} voiceProblem(); done(); } }, 4000); };
+  // Chrome can silently drop an utterance queued right after cancel(), so pause briefly in that case
+  if(hadSpeech) setTimeout(start,120); else start();
 }
-function stopSpeech(){ try{speechSynthesis.cancel()}catch(e){} if(currentAudio){currentAudio.pause();currentAudio=null;} }
+function stopSpeech(){
+  let had=false;
+  if(synth){ try{ had=synth.speaking||synth.pending; if(had) synth.cancel(); }catch(e){} }
+  if(currentAudio){ currentAudio.pause(); currentAudio=null; }
+  return had;
+}
 
 /* ---------------- render ---------------- */
 const app=document.getElementById("app");
@@ -230,10 +250,15 @@ function render(){
   ({setup:rSetup,key:rKey,directions:rDirections,background:rBackground,item:rItem,done:rDone,report:rReport})[S.screen]();
 }
 
-function rSetup(){
-  const vopts = voices.length ? `<label class="field">Reading voice
+function voiceFieldHTML(){
+  return voices.length ? `<label class="field">Reading voice
       <select id="voice"><option value="">Device default</option>${voices.map(v=>`<option ${v.name===S.opts.voice?"selected":""}>${esc(v.name)}</option>`).join("")}</select></label>`
-    : `<p class="muted" style="font-size:14px">This browser's voice list hasn't loaded. The default voice will be used.</p>`;
+    : `<p class="muted" style="font-size:14px">Using this device's default reading voice.</p>`;
+}
+function bindVoiceField(){ const el=document.getElementById("voice"); if(el) el.addEventListener("input",e=>{S.opts.voice=e.target.value;saveOpts()}); }
+function renderVoiceField(){ const f=document.getElementById("voiceField"); if(f){ f.innerHTML=voiceFieldHTML(); bindVoiceField(); } }
+
+function rSetup(){
   app.innerHTML=`
   <section class="card">
     <div><p class="eyebrow">Examiner setup</p><h1>Sentence Comprehension</h1></div>
@@ -246,7 +271,7 @@ function rSetup(){
       <label class="field">Date<input type="date" id="date" value="${esc(S.info.date)}"></label>
     </div>
     <div class="grid2">
-      ${vopts}
+      <div id="voiceField">${voiceFieldHTML()}</div>
       <label class="field">Reading speed
         <select id="rate">${[[0.75,"Slower"],[0.9,"Slightly slow"],[1,"Normal"]].map(([v,l])=>`<option value="${v}" ${S.opts.rate==v?"selected":""}>${l}</option>`).join("")}</select></label>
     </div>
@@ -261,11 +286,12 @@ function rSetup(){
   </section>`;
   const bind=(id,fn)=>document.getElementById(id).addEventListener("input",fn);
   ["student","grade","examiner","date"].forEach(k=>bind(k,e=>S.info[k]=e.target.value));
-  if(voices.length) bind("voice",e=>{S.opts.voice=e.target.value;saveOpts()});
+  bindVoiceField();
   bind("rate",e=>{S.opts.rate=parseFloat(e.target.value);saveOpts()});
   document.getElementById("autoplay").onchange=e=>{S.opts.autoplay=e.target.checked;saveOpts()};
   document.getElementById("showText").onchange=e=>{S.opts.showText=e.target.checked;saveOpts()};
-  document.getElementById("testVoice").onclick=()=>speak("The plant is not healthy.");
+  const tv=document.getElementById("testVoice");
+  tv.onclick=()=>{ tv.textContent="Speaking…"; speak("The plant is not healthy.",null,()=>{ if(tv.isConnected) tv.textContent="Test the voice"; }); };
   document.getElementById("viewKey").onclick=()=>go("key");
   document.getElementById("start").onclick=()=>go("directions");
 }
