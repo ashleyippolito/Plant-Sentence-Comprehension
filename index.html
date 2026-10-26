@@ -94,7 +94,18 @@ textarea{min-height:80px;resize:vertical}
 @media (prefers-reduced-motion:reduce){.choice{transition:none}.choice:hover{transform:none}}
 
 /* Report */
-.score{display:flex;gap:24px;flex-wrap:wrap;align-items:baseline}
+.score{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.riskbox{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.risk{font-family:var(--display);font-weight:800;font-size:24px;border-radius:999px;padding:4px 18px}
+.risk.ok{background:var(--good-soft);color:var(--good)}
+.risk.flag{background:var(--flag-soft);color:var(--flag)}
+.risk.no{background:var(--bad-soft);color:var(--bad)}
+.bands{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.band{border:1px solid var(--line);border-radius:12px;padding:8px 12px;display:flex;justify-content:space-between;gap:8px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;flex-wrap:wrap}
+.band b{font-weight:700}
+.band.on.ok{background:var(--good-soft);color:var(--good);border-color:var(--good)}
+.band.on.flag{background:var(--flag-soft);color:var(--flag);border-color:var(--flag)}
+.band.on.no{background:var(--bad-soft);color:var(--bad);border-color:var(--bad)}
 .big{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;font-variant-numeric:tabular-nums}
 .big small{font-size:26px;color:var(--muted)}
 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px 20px;font-size:15px}
@@ -161,21 +172,28 @@ const ITEMS = [
   {s:"Do you feel the breeze blowing gently?", key:"B"},
   {s:"The leafy, spiky plant grew between the trees.", key:"C"},
   {s:"The butterfly is flying toward the closest flower.", key:"A"},
-  {s:"The teacher asked, “How do plants make their own food?”", key:"D", check:"C (teacher pointing at roots) and D (pointing at leaves) are both plant lessons."},
+  {s:"The teacher asked, “How do plants make their own food?”", key:"D"},
   {s:"The yard has the most bushes, but it has the fewest flowers.", key:"A"},
-  {s:"The boy and the girl picked the tomatoes after they had grown.", key:"C", check:"A also shows the boy and girl picking ripe tomatoes."},
+  {s:"The boy and the girl finished picking the tomatoes after they had grown.", key:"C"},
   {s:"Mom says, “If you don’t water those flowers, they will not survive.”", key:"D"},
   {s:"The deer is eating the leaves not the stem because the thorns are protecting it.", key:"C"},
-  {s:"Dad said, “I don’t need to water the garden today since it rained last night.”", key:"A", check:"Chose the sunny morning (rain was last night). D shows rain right now."},
+  {s:"Dad said, “I don’t need to water the garden this morning since it rained last night.”", key:"A"},
   {s:"A bee landed on the red flower after it developed.", key:"B"},
-  {s:"The gardener who planted the seed was kneeling by her dog.", key:"C"},
+  {s:"The gardener who already planted the seed was kneeling by her dog.", key:"A", check:"Key changed from C to A with the new wording: A shows the seed already planted; C shows her pouring seeds now."},
   {s:"He grew like a tall tree.", key:"B"},
-  {s:"We moved to a new house because dad said it was time to put down our roots.", key:"C", check:"C shows moving in; D shows the family planting at the new house."},
-  {s:"The water was provided to the girl by her mom.", key:"A", check:"A: mom hands the can to the girl. D appears to be the reverse."},
+  {s:"We moved to a new house because dad said it was time to put down our roots.", key:"C"},
+  {s:"The water was provided to the girl by her mom.", key:"A"},
   {s:"We were upset when our vegetables didn’t grow.", key:"C"},
   {s:"The leaves that had fallen to the ground were golden and crunchy.", key:"C"},
 ].map((it,i)=>({...it,n:i+1,audio:it.audio||null}));
 
+/* Risk levels from total score (Claire Dolly, Oct 2026) */
+const RISK = [
+  {min:17, max:20, label:"Low Risk", cls:"ok"},
+  {min:14, max:16, label:"On Watch", cls:"flag"},
+  {min:0,  max:13, label:"At Risk",  cls:"no"},
+];
+const riskFor = score => RISK.find(r=>score>=r.min && score<=r.max) || RISK[RISK.length-1];
 const BG_VIDEO = "https://www.youtube.com/watch?v=yTzSIXUU_ds";
 const DIRECTIONS_VIDEO = null; // add a link here when the directions video is ready
 const INTRO_VIDEO = null;      // add a link here when Claire and Holden's overview video is ready
@@ -300,7 +318,7 @@ function rKey(){
   const flagged=ITEMS.filter(x=>x.check).length;
   app.innerHTML=`<section class="card">
     <div class="row"><div><p class="eyebrow">Examiner only</p><h2>Answer key</h2></div><span class="spacer"></span><button class="btn ghost small" id="back">Back to setup</button></div>
-    <div class="note"><b>${flagged} items marked “Confirm”</b> have a second picture that could also fit. Tap any picture to change the key for this session. Permanent changes go in the ITEMS list in the page source.</div>
+    <div class="note"><b>${flagged} item${flagged===1?"":"s"} marked “Confirm”</b> have a second picture that could also fit. Tap any picture to change the key for this session. Permanent changes go in the ITEMS list in the page source.</div>
     ${ITEMS.map(it=>`<div class="keyitem">
       <div class="row"><h3>${it.n}. ${esc(it.s)}</h3>${it.check?`<span class="pill flag">Confirm</span>`:""}</div>
       ${it.check?`<p class="muted" style="font-size:14px">${esc(it.check)}</p>`:""}
@@ -391,10 +409,14 @@ function rReport(){
   const answered=S.resp.filter(r=>r.choice).length;
   const correct=ITEMS.reduce((a,_,k)=>a+(isCorrect(k)?1:0),0);
   const pct=Math.round(correct/ITEMS.length*100);
+  const risk=riskFor(correct);
   const fmt=ms=>ms==null?"–":(ms/1000).toFixed(1)+" s";
   app.innerHTML=`<section class="card">
     <div class="row"><div><p class="eyebrow">Examiner report</p><h2>Sentence comprehension score</h2></div></div>
-    <div class="score"><div class="big">${correct}<small> / ${ITEMS.length}</small></div><div><b style="font-size:22px">${pct}% correct</b><p class="muted">${answered} of ${ITEMS.length} items answered</p></div></div>
+    <div class="score"><div class="big">${correct}<small> / ${ITEMS.length}</small></div>
+      <div class="riskbox"><span class="risk ${risk.cls}">${risk.label}</span><p class="muted">${pct}% correct · ${answered} of ${ITEMS.length} items answered</p></div></div>
+    <div class="bands" aria-label="Risk levels">${RISK.map(r=>`<div class="band ${r.cls} ${r===risk?"on":""}"><b>${r.label}</b><span>${r.min}–${r.max}</span></div>`).join("")}</div>
+    ${answered<ITEMS.length?`<div class="note"><b>${ITEMS.length-answered} item${ITEMS.length-answered>1?"s were":" was"} not answered</b> and counted as incorrect, so this score may underestimate the child’s skills.</div>`:""}
     <div class="meta">
       <div><b>Student</b>${esc(S.info.student||"–")}</div><div><b>Grade</b>${esc(S.info.grade||"–")}</div>
       <div><b>Examiner</b>${esc(S.info.examiner||"–")}</div><div><b>Date</b>${esc(S.info.date||"–")}</div>
@@ -427,6 +449,7 @@ function rReport(){
     const head=["Student","Grade","Examiner","Date","Item","Sentence","Response","Key","Score","Plays","Seconds"];
     const rows=ITEMS.map((it,k)=>{const r=S.resp[k];return [S.info.student,S.info.grade,S.info.examiner,S.info.date,it.n,it.s,r.choice||"",it.key,isCorrect(k)?1:0,r.plays,r.ms==null?"":(r.ms/1000).toFixed(1)];});
     rows.push(["","","","","TOTAL","",""," ",correct,"",""]);
+    rows.push(["","","","","RISK LEVEL",risk.label]);
     if(S.notes) rows.push(["","","","","NOTES",S.notes.replace(/\s+/g," ")]);
     const tsv=[head,...rows].map(r=>r.join("\t")).join("\n");
     const fb=()=>{document.getElementById("fallback").innerHTML=`<p class="muted" style="font-size:14px">Copying was blocked. Select the text below and copy it.</p><textarea class="copyfallback" id="tsv" readonly>${esc(tsv)}</textarea>`;const t=document.getElementById("tsv");t.focus();t.select();};
