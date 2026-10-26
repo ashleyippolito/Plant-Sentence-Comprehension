@@ -17,8 +17,8 @@ All content is near the top of the `<script>` in `index.html`:
 |---|---|
 | Sentences and answer key | `ITEMS` list. `key` is the correct picture: A top-left, B top-right, C bottom-left, D bottom-right. Remove `check` once a key is confirmed. |
 | Plant background video | `BG_VIDEO` |
-| Student directions video | `DIRECTIONS_VIDEO` (set to a YouTube link) |
-| Overview video on the front page | `INTRO_VIDEO` (set to a YouTube link) |
+| Student directions video | `DIRECTIONS_VIDEO` (Holden's assessment video) |
+| Video on the front page | `INTRO_VIDEO` (same video) |
 | Recorded sentences | Add `item01.mp3` ... `item20.mp3` to `audio/` (see `audio/README.md`) |
 
 YouTube links play right on the page, with a backup link to open them on YouTube.

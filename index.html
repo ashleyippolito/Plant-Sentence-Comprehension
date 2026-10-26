@@ -195,8 +195,8 @@ const RISK = [
 ];
 const riskFor = score => RISK.find(r=>score>=r.min && score<=r.max) || RISK[RISK.length-1];
 const BG_VIDEO = "https://www.youtube.com/watch?v=yTzSIXUU_ds";
-const DIRECTIONS_VIDEO = null; // add a link here when the directions video is ready
-const INTRO_VIDEO = null;      // add a link here when Claire and Holden's overview video is ready
+const DIRECTIONS_VIDEO = "https://youtu.be/n7YQ4o9TtPg"; // Holden's assessment video (unlisted)
+const INTRO_VIDEO = "https://youtu.be/n7YQ4o9TtPg";      // same video, shown on the front page
 const BUILD = {embed:true,audioDir:"audio/"}; // embed: play YouTube videos on the page; audioDir: folder of recorded clips (item01.mp3 ... item20.mp3)
 const LETTERS = ["A","B","C","D"];
 function ytId(u){ const m=String(u).match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/); return m?m[1]:null; }
@@ -281,7 +281,7 @@ function rSetup(){
   <section class="card">
     <div><p class="eyebrow">Examiner setup</p><h1>Sentence Comprehension</h1></div>
     <p class="muted">The student hears 20 sentences about plants. After each one, they tap the picture that matches. Scores appear at the end for the examiner.</p>
-    ${INTRO_VIDEO ? videoHTML(INTRO_VIDEO,"Watch the overview","Screener overview: how to give this screener.") : `<div class="videobox"><svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="15" height="14" rx="3" fill="none" stroke="var(--muted)" stroke-width="1.8"/><path d="M17 10l5-3v10l-5-3z" fill="var(--muted)"/></svg><p class="eyebrow">Screener overview video</p><p class="muted">A walkthrough video from Claire Dolly and Holden is coming soon.</p></div>`}
+    ${INTRO_VIDEO ? videoHTML(INTRO_VIDEO,"Watch the assessment video","Assessment video: the purpose, tasks, and logistics of the screener.") : `<div class="videobox"><svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="15" height="14" rx="3" fill="none" stroke="var(--muted)" stroke-width="1.8"/><path d="M17 10l5-3v10l-5-3z" fill="var(--muted)"/></svg><p class="eyebrow">Screener overview video</p><p class="muted">A walkthrough video from Claire Dolly and Holden is coming soon.</p></div>`}
     <div class="grid2">
       <label class="field">Student name or ID<input type="text" id="student" value="${esc(S.info.student)}" autocomplete="off"></label>
       <label class="field">Grade<input type="text" id="grade" value="${esc(S.info.grade)}" autocomplete="off"></label>
@@ -333,7 +333,7 @@ const DIR_TEXT="You are going to hear some sentences about plants. After each se
 function rDirections(){
   app.innerHTML=`<section class="card">
     <div><p class="eyebrow">Step 1 of 3</p><h2>Directions</h2></div>
-    ${DIRECTIONS_VIDEO ? videoHTML(DIRECTIONS_VIDEO,"Watch directions","Watch the directions video.")
+    ${DIRECTIONS_VIDEO ? videoHTML(DIRECTIONS_VIDEO,"Watch the directions video","Watch this video to learn what you will do.")
       : `<div class="videobox"><p class="muted">Directions video coming soon. For now, press the button to hear the directions.</p></div>`}
     <p style="font-size:20px">${DIR_TEXT}</p>
     <div class="row"><button class="btn ghost" id="hear">${SPEAKER} Hear directions</button><span class="spacer"></span><button class="btn" id="next">Next</button></div>
